@@ -25,20 +25,19 @@ public class Person {
      */
     public boolean marry(Person person) {
         if (person.man == this.man) {
-            log.info("Spouse of the same sex");
+            log.trace("Spouse of the same sex");
             return false;
+        } else {
+            if (this.spouse != null || person.spouse != null) {
+                log.trace("Person is already married");
+                this.divorce();
+                person.divorce();
+            }
+            this.spouse = person;
+            person.spouse = this;
+            log.trace("Person has married");
+            return true;
         }
-        if (person == this.spouse) {
-            log.info("Person is already married");
-            return false;
-        }
-        this.divorce();
-        person.divorce();
-
-        this.spouse = person;
-        person.spouse = this;
-        log.info("Person has married");
-        return true;
     }
 
     /**
@@ -48,21 +47,14 @@ public class Person {
      */
     public boolean divorce() {
         if (this.spouse == null) {
-            log.info("Person is not married");
+            log.trace("Person is not married");
             return false;
+        } else {
+            this.spouse.spouse = null;
+            this.spouse = null;
+            log.trace("Person divorced");
+            return true;
         }
-        this.spouse.spouse = null;
-        this.spouse = null;
-        log.info("Person divorced");
-        return true;
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "man=" + man +
-                ", name='" + name + '\'' +
-                ", spouse=" + (spouse != null) +
-                '}';
-    }
+    
 }

@@ -17,6 +17,9 @@ public class PersonTest {
 
         Person p4 = new Person(true, "Alex");
         Assert.assertFalse(p4.marry(p2));
+
+        Person p5 = new Person(true, "Petr");
+        Assert.assertTrue(p1.marry(p5));
     }
 
     @Test
